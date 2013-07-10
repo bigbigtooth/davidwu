@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('david', 'bigbigh@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -120,10 +120,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'wx',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -154,3 +152,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from xsettings import *
+except Exception, e:
+    print '----------', e
