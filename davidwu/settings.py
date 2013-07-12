@@ -146,7 +146,6 @@ LOGGING = {
         'console':{
             'level':'DEBUG',
             'class':'logging.StreamHandler',
-            'formatter': 'verbose'
         },
         'file':{
             'level':'INFO',
@@ -154,7 +153,6 @@ LOGGING = {
             'filename': os.path.join(PROJECT_ROOT, 'david.log'),
             'maxBytes': 1024 * 1024 * 50,
             'backupCount': 10,
-            'formatter': 'verbose'
         },
         'mail_admins': {
             'level': 'ERROR',
