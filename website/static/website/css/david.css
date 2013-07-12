@@ -1,0 +1,21 @@
+/* public */
+body,p,li,ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+body {
+    background-color: rgb(233,233,231);
+    font-family:"Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft Yahei","微软雅黑",Tahoma,Arial,STHeiti,sans-serif;
+    _font-family:Tahoma,Arial,Helvetica,STHeiti,sans-serif;
+    cursor:default
+}
+img{border: 0;}
+.left {
+    position: relative;
+    left: 20px;
+}
+::selection {
+    background:#f28729;
+    color:#FFF
+}
