@@ -1,7 +1,11 @@
 # Django settings for davidwu project.
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 ADMINS = (
     ('david', 'bigbigh@gmail.com'),
@@ -139,6 +143,19 @@ LOGGING = {
         }
     },
     'handlers': {
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'file':{
+            'level':'INFO',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(PROJECT_ROOT, 'david.log'),
+            'maxBytes': 1024 * 1024 * 50,
+            'backupCount': 10,
+            'formatter': 'verbose'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -146,6 +163,11 @@ LOGGING = {
         }
     },
     'loggers': {
+        'django': {
+            'handlers':['file', 'console'],
+            'propagate': True,
+            'level':'DEBUG',
+            },
         'django.request': {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
