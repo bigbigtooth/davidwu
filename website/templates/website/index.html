@@ -25,10 +25,29 @@
         </div>
         <!-- end #menu -->
         <div id="search">
-            <form method="get" action="">
+            <SCRIPT language=javascript>
+                function g(formname)	{
+                    var url = "http://www.baidu.com/baidu";
+                    if (formname.s[1].checked) {
+                        formname.ct.value = "2097152";
+                    }
+                    else {
+                        formname.ct.value = "0";
+                    }
+                    formname.action = url;
+                    return true;
+                }
+            </SCRIPT>
+            <form name="f1" onsubmit="return g(this)">
                 <fieldset>
-                    <input type="text" name="s" id="search-text" size="15" />
+                    <input type="text" name="word" id="search-text" size="15" maxlength="100"/>
                     <input type="submit" id="search-submit" value="GO" />
+                    <input name=tn type=hidden value="bds">
+                    <input name=cl type=hidden value="3">
+                    <input name=ct type=hidden>
+                    <input name=si type=hidden value="davidwu.cn">
+                    <input name=s type=hidden value="davidwu.cn">
+                    <input name=ie type=hidden value=utf-8>
                 </fieldset>
             </form>
         </div>
