@@ -28,6 +28,10 @@ def wx(request):
     log.debug("=======POST======%s" % request.POST)
     log.debug("=======REQUEST======%s" % request.REQUEST)
 
+    ks = dir(request)
+    for k in ks:
+        log.debug("=======%s======%s" % (k, getattr(request, k, None)))
+
     data = {
         'a':1
     }
