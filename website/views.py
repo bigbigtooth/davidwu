@@ -22,5 +22,6 @@ def index(request):
 
 @csrf_exempt
 def wx(request):
-    log.debug("=============%s" % request.GET)
+    log.debug("=======GET======%s" % request.GET)
+    log.debug("=======POST======%s" % request.POST)
     return HttpResponse(request.GET.get('echostr', None))
