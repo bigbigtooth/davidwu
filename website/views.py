@@ -5,6 +5,7 @@ import logging
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 log = logging.getLogger('django')
 
@@ -19,6 +20,7 @@ def index(request):
     return render(request, 'website/index.html', {})
 
 
+@csrf_exempt
 def wx(request):
     log.debug("=============%s" % request.GET)
     return HttpResponse(request.GET.get('echostr', None))
