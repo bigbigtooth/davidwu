@@ -7,6 +7,8 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from davidwu import utils
+
 log = logging.getLogger('django')
 
 
@@ -24,4 +26,11 @@ def index(request):
 def wx(request):
     log.debug("=======GET======%s" % request.GET)
     log.debug("=======POST======%s" % request.POST)
-    return HttpResponse(request.GET.get('echostr', None))
+    log.debug("=======REQUEST======%s" % request.REQUEST)
+
+    data = {
+        'a':1
+    }
+    return HttpResponse(utils.dict2xml(data))
+
+
