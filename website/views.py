@@ -1,16 +1,19 @@
 #encoding=utf-8
 
 import logging
+from datetime import datetime, time
+from xml.dom import minidom
 
+import xmltodict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from davidwu import utils
+from wx import WXRequest,WXResponse
 
 log = logging.getLogger('django')
-
 
 
 def render(request, template, context):
@@ -24,17 +27,19 @@ def index(request):
 
 @csrf_exempt
 def wx(request):
-    log.debug("=======GET======%s" % request.GET)
-    log.debug("=======POST======%s" % request.POST)
-    log.debug("=======REQUEST======%s" % request.REQUEST)
+    def do_command(req):
+        log.debug("=========%s" % req.xml)
 
-    ks = dir(request)
-    for k in ks:
-        log.debug("=======%s======%s" % (k, getattr(request, k, None)))
+        resp = WXResponse()
+        resp.set_from_username(req.get('ToUserName'))
+        resp.set_to_username(req.get('FromUserName'))
+        resp.set_content(u'你好啊')
+        return resp
 
-    data = {
-        'a':1
-    }
-    return HttpResponse(utils.dict2xml(data))
-
-
+    if request.method == 'POST':
+        xml = request.body
+        if xml and xml.startswith('<xml>'):
+            obj = WXRequest(xml)
+            resp = do_command(obj)
+            return HttpResponse(resp.data())
+    return HttpResponse('')
