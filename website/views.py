@@ -30,6 +30,8 @@ def wx(request):
     def do_command(req):
         log.debug("=========%s" % req.xml)
 
+
+
         resp = WXResponse()
         resp.set_from_username(req.get('ToUserName'))
         resp.set_to_username(req.get('FromUserName'))
@@ -39,8 +41,8 @@ def wx(request):
     if request.method == 'POST':
         xml = request.body
         if xml and xml.startswith('<xml>'):
-            obj = WXRequest(xml)
-            resp = do_command(obj)
+            log.debug("=========%s" % xml)
+            resp = WXRequest(xml).do()
             return HttpResponse(resp.data())
 
     if request.method == 'GET':
