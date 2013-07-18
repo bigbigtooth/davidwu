@@ -42,4 +42,8 @@ def wx(request):
             obj = WXRequest(xml)
             resp = do_command(obj)
             return HttpResponse(resp.data())
+
+    if request.method == 'GET':
+        return HttpResponse(request.GET.get('echostr'))
+
     return HttpResponse('')
