@@ -172,33 +172,29 @@ class WXHandler():
                     self.resp.set_content(u'输入“菜单”可以看到我们的菜单；\n 输入“我”可以查看和修改您的个人资料。')
 
     def doo_menu(self):
-        try:
-            content = self.req.get('Content')
-            if content:
-                if ',' in content:
-                    os = content.split(',')
-                else:
-                    os = [content]
+        content = self.req.get('Content')
+        if content:
+            if u',' in content:
+                os = content.split(',')
+            else:
+                os = [content]
 
-                orders = {}
-                for o in os:
-                    if o and type(o) == int and self.menus[int(o)]:
-                        if int(o) in orders:
-                            orders[int(o)] += 1
-                        else:
-                            orders[int(o)] = 1
+            orders = {}
+            for o in os:
+                if o and type(o) == int and self.menus[int(o)]:
+                    if int(o) in orders:
+                        orders[int(o)] += 1
+                    else:
+                        orders[int(o)] = 1
 
-                print 'Order : ', orders
-                confirm_str = u''
-                for key, value in orders.iteritems():
-                    confirm_str += u'\n%s x %s' % (key, value)
+            print 'Order : ', orders
+            confirm_str = u''
+            for key, value in orders.iteritems():
+                confirm_str += u'\n%s x %s' % (key, value)
 
-                if confirm_str:
-                    self.resp.set_content(u'请确认订单：%s' % confirm_str)
-                else:
-                    self.resp.set_content(u'下单错误，请重新下单！')
-                return True
-        except Exception, e:
-            print e
-            log.error(e, exc_info=True)
+            if confirm_str:
+                self.resp.set_content(u'请确认订单：%s' % confirm_str)
+            else:
+                self.resp.set_content(u'下单错误，请重新下单！')
+            return True
         return False
