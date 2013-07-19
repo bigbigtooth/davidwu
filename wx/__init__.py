@@ -96,6 +96,8 @@ class WXResponse():
 class WXHandler():
     ''' 处理公众号业务逻辑
     '''
+    check_point_key = 'u_%s_last_action'
+
     def __init__(self, req):
         self.req = req
 
@@ -106,15 +108,15 @@ class WXHandler():
     def save_checkpoint(self, action):
         if action:
             from_user = self.req.get('FromUserName')
-            cache.set('u_%s_last_action' % from_user, action, 600)
+            cache.set(self.check_point_key % from_user, action, 600)
 
     def clear_checkpoint(self):
         from_user = self.req.get('FromUserName')
-        return cache.delete('u_%s_last_action' % from_user)
+        return cache.delete(self.check_point_key % from_user)
 
     def checkpoint(self):
         from_user = self.req.get('FromUserName')
-        return cache.get('u_%s_last_action' % from_user)
+        return cache.get(self.check_point_key % from_user)
 
     def do(self):
         type = self.req.get_msg_type()
@@ -170,13 +172,22 @@ class WXHandler():
                     self.resp.set_content(u'输入“菜单”可以看到我们的菜单；\n 输入“我”可以查看和修改您的个人资料。')
 
     def doo_menu(self):
-        content = self.req.get('Content')
-        if content:
-            orders = []
-            if self.menus[int(content)]:
-                orders.append(int(content))
+        try:
+            content = self.req.get('Content')
+            if content:
+                if ',' in content:
+                    os = content.split(',')
+                else:
+                    os = [content]
 
-            print 'Order : ', orders
-            self.resp.set_content(u'请确认订单：')
-            return True
+                orders = []
+                for o in os:
+                    if o and type(o) == int and self.menus[int(o)]:
+                        orders.append(int(content))
+
+                print 'Order : ', orders
+                self.resp.set_content(u'请确认订单：')
+                return True
+        except Exception, e:
+            log.error(e, exc_info=True)
         return False
