@@ -178,11 +178,10 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake'
-    }
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': 'memcached:11211',
+        }
 }
-
 try:
     from xsettings import *
 except Exception, e:
