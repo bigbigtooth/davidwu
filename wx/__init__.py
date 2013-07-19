@@ -183,7 +183,7 @@ class WXHandler():
                 orders = {}
                 for o in os:
                     if o and type(o) == int and self.menus[int(o)]:
-                        if orders[int(o)]:
+                        if int(o) in orders:
                             orders[int(o)] += 1
                         else:
                             orders[int(o)] = 1
@@ -192,8 +192,13 @@ class WXHandler():
                 confirm_str = u''
                 for key, value in orders.iteritems():
                     confirm_str += u'\n%s x %s' % (key, value)
-                self.resp.set_content(u'请确认订单：%s' % confirm_str)
+
+                if confirm_str:
+                    self.resp.set_content(u'请确认订单：%s' % confirm_str)
+                else:
+                    self.resp.set_content(u'下单错误，请重新下单！')
                 return True
         except Exception, e:
+            print e
             log.error(e, exc_info=True)
         return False
