@@ -183,10 +183,10 @@ class WXHandler():
                 orders = {}
                 for o in os:
                     if o and type(o) == int and self.menus[int(o)]:
-                        if orders[int(content)]:
-                            orders[int(content)] += 1
+                        if orders[int(o)]:
+                            orders[int(o)] += 1
                         else:
-                            orders[int(content)] = 1
+                            orders[int(o)] = 1
 
                 print 'Order : ', orders
                 confirm_str = u''
