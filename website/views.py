@@ -41,8 +41,8 @@ def wx(request):
     if request.method == 'POST':
         xml = request.body
         if xml and xml.startswith('<xml>'):
-            log.debug("=========%s" % xml)
-            resp = WXRequest(xml).do()
+            log.debug("=====WX Request====%s" % xml)
+            resp = WXRequest(request).do()
             return HttpResponse(resp.data())
 
     if request.method == 'GET':
