@@ -191,7 +191,7 @@ class WXHandler():
                 print 'Order : ', orders
                 confirm_str = u''
                 for key, value in orders.iteritems():
-                    confirm_str += '\n%s x %s' % (key, value)
+                    confirm_str += u'\n%s x %s' % (key, value)
                 self.resp.set_content(u'请确认订单：%s' % confirm_str)
                 return True
         except Exception, e:
