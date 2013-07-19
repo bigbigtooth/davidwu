@@ -146,6 +146,7 @@ class WXHandler():
         content = self.req.get('Content')
         if content:
             is_finish = False
+            print '-------Cache---------', cache._cache
             if self.checkpoint():
                 print 'Yes, you start to order...'
                 is_finish = getattr(self, 'doo_%s' % self.checkpoint(), None)()
