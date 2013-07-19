@@ -161,9 +161,9 @@ class WXHandler():
                     for key, value in self.menus.iteritems():
                         menu_str += '\n [%s] : %s' % (key, value)
 
-                    self.resp.set_content(u'请输入下面菜单的序号订餐（可多选，用逗号隔开）：%s' % menu_str)
                     self.save_checkpoint('menu')
-                    print 'Save to check point'
+                    print 'Save to check point', cache._cache
+                    self.resp.set_content(u'请输入下面菜单的序号订餐（可多选，用逗号隔开）：%s' % menu_str)
                 elif content == u'我':
                     print '---2---'
                     pass
