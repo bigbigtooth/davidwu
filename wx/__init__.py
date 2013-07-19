@@ -156,45 +156,52 @@ class WXHandler():
 
             if not is_finish:
                 if content == u'菜单':
-                    print '---1---'
                     menu_str = u''
                     for key, value in self.menus.iteritems():
                         menu_str += '\n [%s] : %s' % (key, value)
 
                     self.save_checkpoint('menu')
                     print 'Save to check point', cache._cache
+
                     self.resp.set_content(u'请输入下面菜单的序号订餐（可多选，用逗号隔开）：%s' % menu_str)
                 elif content == u'我':
-                    print '---2---'
                     pass
                 else:
-                    print '---3---'
                     self.resp.set_content(u'输入“菜单”可以看到我们的菜单；\n 输入“我”可以查看和修改您的个人资料。')
 
     def doo_menu(self):
-        content = self.req.get('Content')
-        if content:
-            if u',' in content:
-                os = content.split(',')
-            else:
-                os = [content]
+        try:
+            content = self.req.get('Content')
+            if content:
+                if ',' in content:
+                    os = content.split(',')
+                else:
+                    os = [content]
 
-            orders = {}
-            for o in os:
-                if o and type(o) == int and self.menus[int(o)]:
-                    if int(o) in orders:
-                        orders[int(o)] += 1
-                    else:
-                        orders[int(o)] = 1
+                orders = {}
+                for o in os:
+                    try:
+                        o = int(o)
+                        if o and self.menus[o]:
+                            if o in orders:
+                                orders[o] += 1
+                            else:
+                                orders[o] = 1
+                    except:
+                        pass
 
-            print 'Order : ', orders
-            confirm_str = u''
-            for key, value in orders.iteritems():
-                confirm_str += u'\n%s x %s' % (key, value)
+                print 'Order : ', orders
+                confirm_str = u''
+                for key, value in orders.iteritems():
+                    confirm_str += u'\n%s x %s' % (self.menus[key], value)
 
-            if confirm_str:
-                self.resp.set_content(u'请确认订单：%s' % confirm_str)
-            else:
-                self.resp.set_content(u'下单错误，请重新下单！')
-            return True
+                if confirm_str:
+                    self.resp.set_content(u'请确认订单：%s' % confirm_str)
+                else:
+                    self.resp.set_content(u'下单错误，请重新下单！')
+                return True
+        except Exception, e:
+            print 'Doo_menu Error...', e
+            log.error(e, exc_info=True)
+            self.resp.set_content(u'下单错误，请重新下单！')
         return False
