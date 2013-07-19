@@ -172,7 +172,6 @@ class WXHandler():
         content = self.req.get('Content')
         if content:
             orders = []
-            print content
             if self.menus[int(content)]:
                 orders.append(int(content))
 
