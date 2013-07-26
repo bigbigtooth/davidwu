@@ -160,7 +160,7 @@ class WXHandler():
                 if content == u'菜单':
                     menu_str = u''
                     for key, value in self.menus.iteritems():
-                        menu_str += '\n [%s] : %s -- ￥%s' % (key, value['name'], value['price'])
+                        menu_str += u'\n [%s] : %s -- ￥%s' % (key, value['name'], value['price'])
 
                     self.save_checkpoint('menu')
                     print 'Save to check point', cache._cache
