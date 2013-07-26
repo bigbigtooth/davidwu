@@ -196,7 +196,7 @@ class WXHandler():
                 confirm_str = u''
                 total_price = 0
                 for key, value in orders.iteritems():
-                    price = int(self.menus[key]['price'])
+                    price = int(self.menus[key]['price']) * value
                     confirm_str += u'\n%s x %s  ￥ %s' % (self.menus[key]['name'], value, price)
                     total_price += price
 
