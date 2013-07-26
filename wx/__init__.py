@@ -153,8 +153,9 @@ class WXHandler():
             print '-------Cache---------', cache._cache
             if self.checkpoint():
                 print 'Yes, you start to order...'
-                is_finish = getattr(self, 'doo_%s' % self.checkpoint(), None)()
+                check_point = self.checkpoint()
                 self.clear_checkpoint()
+                is_finish = getattr(self, 'doo_%s' % check_point, None)()
 
             if not is_finish:
                 if content == u'菜单':
