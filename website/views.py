@@ -30,8 +30,6 @@ def wx(request):
     def do_command(req):
         log.debug("=========%s" % req.xml)
 
-
-
         resp = WXResponse()
         resp.set_from_username(req.get('ToUserName'))
         resp.set_to_username(req.get('FromUserName'))

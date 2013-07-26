@@ -142,7 +142,9 @@ class WXHandler():
             self.resp.add_item(data)
 
 
-    menus = {1: u'濑尿牛肉丸', 2 : u'黯然神伤饭', 3 : u'捞你命3000'}
+    menus = {1: {"name":u'濑尿牛肉丸', "price":10},
+             2 : {"name":u'黯然神伤饭', "price":15},
+             3 : {"name":u'捞你命3000', "price":30}}
 
     def do_text(self):
         content = self.req.get('Content')
@@ -192,11 +194,17 @@ class WXHandler():
 
                 print 'Order : ', orders
                 confirm_str = u''
+                total_price = 0
                 for key, value in orders.iteritems():
-                    confirm_str += u'\n%s x %s' % (self.menus[key], value)
+                    price = int(self.menus[key]['price'])
+                    confirm_str += u'\n%s x %s  ￥ %s' % (self.menus[key]['name'], value, price)
+                    total_price += price
 
                 if confirm_str:
-                    self.resp.set_content(u'请确认订单：%s' % confirm_str)
+                    content = u'请确认订单：%s\n%s' % (confirm_str, u'总价：￥ %s' % total_price)
+                    content += u'\n确定请输入“1”，重新选择请输入“0”'
+                    self.resp.set_content(content)
+                    self.save_checkpoint('order')
                 else:
                     self.resp.set_content(u'下单错误，请重新下单！')
                 return True
@@ -205,3 +213,14 @@ class WXHandler():
             log.error(e, exc_info=True)
             self.resp.set_content(u'下单错误，请重新下单！')
         return False
+
+
+    def doo_order(self):
+        content = self.req.get('Content')
+        if content == "1":
+            self.resp.set_content(u'下单成功！')
+            return True
+        else:
+            return False
+
+
