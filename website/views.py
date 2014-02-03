@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from davidwu import utils
 from wx import WXRequest,WXResponse
+from personal.models import Blog
 
 log = logging.getLogger('django')
 
@@ -22,7 +23,8 @@ def render(request, template, context):
 
 
 def index(request):
-    return render(request, 'website/index.html', {})
+    blogs = Blog.objects.all().order_by('-create_time')[:3]
+    return render(request, 'website/index.html', {'blogs': blogs})
 
 
 @csrf_exempt

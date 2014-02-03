@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'wx',
     'website',
+    'personal',
 )
 
 # A sample logging configuration. The only tangible logging
